@@ -7,3 +7,8 @@ xgboost
 catboost
 flask
 python-dotenv
+pymongo
+certifi
+
+
+# -e .
