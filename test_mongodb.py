@@ -1,11 +1,20 @@
-
+import os
+from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+import certifi
 
-uri = "mongodb+srv://saishreyansh2210_db_user:Ansh2210@cluster0.1ihxdw6.mongodb.net/?appName=Cluster0"
+# 1. Load the hidden environment variables from your .env file
+load_dotenv()
 
-# Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'))
+# 2. Securely fetch the URL
+uri = os.getenv("MONGO_DB_URL")
+
+# 3. Get the trusted security certificate to pass the cloud firewall
+ca = certifi.where()
+
+# 4. Create a new client, connect to the server, and pass the certificate!
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=ca)
 
 # Send a ping to confirm a successful connection
 try:
